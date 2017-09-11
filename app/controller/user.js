@@ -19,25 +19,34 @@ module.exports = app => {
     // 注册表单的提交
     async registerPost() {
       const ctx = this.ctx;
-      const createRule = {
-        email: { type: 'email', require: true },
-        username: { type: 'string', require: true },
-        password: { type: 'string', require: true },
-        repassword: { type: 'string', require: true, compare: ctx.request.body.password },
-      };
+      // const createRule = {
+      //   email: { type: 'email', require: true },
+      //   username: { type: 'string', require: true },
+      //   password: { type: 'string', require: true },
+      //   repassword: { type: 'string', require: true, compare: ctx.request.body.password },
+      // };
       const md5Obj = crypto.createHash('md5');
       const psw = md5Obj.update(ctx.request.body.password).digest('base64');
-    //   if (ctx.request.body.password !== ctx.request.body.repassword) {
-    //     yield ctx.render('/user/register.tpl', {
-    //       title: '用户注册',
-    //       error: true,
-    //       message: '两次密码输入不一致',
-    //     });
-    //     return;
-    //   }
-
-      ctx.validate(createRule, ctx.request.body);
-      console.log(ctx.body, 'iiii');
+      if (ctx.request.body.password !== ctx.request.body.repassword) {
+        await ctx.render('/user/register.tpl', {
+          title: '用户注册',
+          error: true,
+          message: '两次密码输入不一致',
+        });
+        return;
+      }
+      // ctx.validate(createRule, ctx.request.body);
+      const user = await ctx.model.User.findOne({
+        email: ctx.request.body.email,
+      });
+      if (user) {
+        await ctx.render('/user/register.tpl', {
+          title: '用户注册',
+          error: true,
+          message: '用户已经存在',
+        });
+        return;
+      }
       const newUser = new ctx.model.User({
         username: ctx.request.body.username,
         password: psw,

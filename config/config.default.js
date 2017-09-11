@@ -20,7 +20,7 @@ module.exports = appInfo => {
     options: {},
   };
   // 中间件配置
-  config.middleware = [ 'error' ];
+  // config.middleware = [ 'error' ];
 
 
   return config;
