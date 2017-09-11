@@ -5,7 +5,6 @@
     <title>{{ title }}</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href="/public/main.css" rel="stylesheet">
-    <link href="/public/post.css" rel="stylesheet">
     <link href="/public/user.css" rel="stylesheet">
 </head>
 <body>
