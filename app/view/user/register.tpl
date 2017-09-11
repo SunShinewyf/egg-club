@@ -14,7 +14,7 @@
         <form method="post"  action="/user/registerPost">
         <div class="control-group">
             <label class="label" for="email">邮箱</label>
-            <input type="email" class="email input" name="email" type="text" placeholder="请填写邮箱" required/>
+            <input class="email input" name="email" type="text" placeholder="请填写邮箱" required/>
         </div>
         <div class="control-group">
             <label class="label" for="name">用户名</label>

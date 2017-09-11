@@ -14,5 +14,10 @@ module.exports = appInfo => {
       '.nj': 'nunjucks',
     },
   };
+
+  config.mongoose = {
+    url: 'mongodb://127.0.0.1/egg-club',
+    options: {},
+  };
   return config;
 };
