@@ -19,8 +19,6 @@ module.exports = appInfo => {
     url: 'mongodb://127.0.0.1/egg-club',
     options: {},
   };
-  // 中间件配置
-  // config.middleware = [ 'error' ];
 
 
   return config;
