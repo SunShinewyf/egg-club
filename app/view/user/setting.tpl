@@ -5,22 +5,22 @@
       <span><a href="/" class="index">首页</a>/ 个人设置</span>
    </div>
    <div class="info-panel">
-        <form method="post" action="">
+        <form method="post" action="/user/settingPost">
         <div class="control-group">
             <label class="label" for="name">用户名</label>
-            <input class="name input" name="username" type="text"/>
-        </div>
-        <div class="control-group">
-            <label class="label" for="email">电子邮件</label>
-            <input class="email input" name="email" type="text"/>
+            <input class="name input" name="username" type="text" value={{user.username}}>
         </div>
         <div class="control-group">
             <label class="label" for="github">Github</label>
-            <input class="github input" name="github" type="text"/>
+            <input class="github input" name="github" type="text" value ={{user.github}}>
+        </div>
+        <div class="control-group">
+            <label class="label" for="github">头像上传</label>
+            <input class="github" name="github" type="file">
         </div>
         <div class="control-group">
             <label class="label" for="signature">个性签名</label>
-            <textarea class="signature textarea" name="signature" type="text"></textarea>
+            <textarea class="signature textarea" name="signature" type="text" value= {{user.signature}}></textarea>
         </div>
         <input type="submit" value="保存设置" class="submit-btn"/>
         </form>

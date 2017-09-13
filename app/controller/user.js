@@ -11,19 +11,45 @@ module.exports = app => {
     }
     // 注册模块
     async register() {
+      // if (this.ctx.session.user[0]) {
+      //   await this.ctx.render('index/index.tpl', {
+      //     title: 'egg社区',
+      //   });
+      //   return;
+      // }
       await this.ctx.render('user/register.tpl', {
         title: '用户注册',
       });
     }
 
     // 登录模块
-    * login() {
-      yield this.ctx.render('user/login.tpl');
+    async login() {
+      if (this.ctx.session.user[0]) {
+        await this.ctx.render('index/index.tpl', {
+          title: 'egg社区',
+        });
+        return;
+      }
+      await this.ctx.render('user/login.tpl');
     }
 
     // 个人设置
-    * setting() {
-      yield this.ctx.render('user/setting.tpl');
+    async setting() {
+      if (!this.ctx.session.user[0]) {
+        await this.ctx.render('user/login.tpl', {
+          title: '用户登录',
+          error: true,
+          message: '还未登录，先登录再设置吧~',
+        });
+        return;
+      }
+      const email = this.ctx.session.user[0].email;
+      const userObj = await this.ctx.service.user.find(email);
+
+      await this.ctx.render('user/setting.tpl', {
+        title: '用户设置',
+        user: userObj[0],
+      });
     }
 
     // 注册表单的提交
@@ -46,8 +72,8 @@ module.exports = app => {
         return;
       }
       // ctx.validateError(createRule, ctx.request.body);
-      const user = ctx.service.user.find(ctx.request.body.email);
-      if (user) {
+      const user = await ctx.service.user.find(ctx.request.body.email);
+      if (user.length) {
         await ctx.render('/user/register.tpl', {
           title: '用户注册',
           error: true,
@@ -60,7 +86,18 @@ module.exports = app => {
         password: psw,
         email: ctx.request.body.email,
       });
-      const result = ctx.service.user.save(newUser);
+      const result = await ctx.service.user.save(newUser);
+      // result 是一个对象类型:
+      //     { __v: 0,
+      // username: '111',
+      // password: 'ZRK9Q9nKpuAsmQsKgmUtyg==',
+      // email: '2632807692@qq.com',
+      // _id: 59b92c805f6f46cc3764822c,
+      // create_time: 2017-09-13T13:02:56.355Z,
+      // reply: 0,
+      // topic: 0,
+      // signature: '这家伙很懒，什么个性签名都没有留下',
+      // scroe: 0 }
       if (result) {
         await ctx.render('/user/login.tpl', {
           title: '用户登录',
@@ -79,7 +116,7 @@ module.exports = app => {
     // 登录表单的提交
     async loginPost() {
       const ctx = this.ctx;
-      const user = ctx.service.user.find(ctx.request.body.email);
+      const user = await ctx.service.user.find(ctx.request.body.email);
       if (!user) {
         await ctx.render('/user/login.tpl', {
           title: '用户登录',
@@ -87,10 +124,39 @@ module.exports = app => {
           message: '用户不存在,请先注册~',
         });
       } else {
+        ctx.session.user = user;
         await ctx.render('/index/index.tpl', {
           title: '用户登录',
           success: true,
           message: '登录成功~',
+        });
+      }
+    }
+
+    // 设置表单的提交
+    async settingPost() {
+      const ctx = this.ctx;
+      const userObj = await ctx.service.user.find(ctx.session.user.email);
+      console.log(userObj[0], 'ooo');
+      const newUser = new ctx.model.User({
+        username: ctx.request.body.username,
+        password: userObj[0].password,
+        email: userObj[0].email,
+        github: ctx.request.body.github,
+        signature: ctx.request.body.signature,
+      });
+      const result = ctx.service.user.save(newUser);
+      console.log(result, 'iiii');
+      if (result) {
+        await this.ctx.render('user/index.tpl', {
+          title: '用户中心',
+          user: userObj,
+        });
+      } else {
+        await this.ctx.render('user/setting.tpl', {
+          title: '用户设置',
+          error: true,
+          message: '个人信息设置失败',
         });
       }
     }
