@@ -16,30 +16,37 @@ module.exports = app => {
       });
     }
 
+    // 登录模块
+    * login() {
+      yield this.ctx.render('user/login.tpl');
+    }
+
+    // 个人设置
+    * setting() {
+      yield this.ctx.render('user/setting.tpl');
+    }
+
     // 注册表单的提交
     async registerPost() {
       const ctx = this.ctx;
-      const createRule = {
-        email: { type: 'email', require: true },
-        username: { type: 'string', require: true },
-        password: { type: 'string', require: true },
-        repassword: { type: 'string', require: true, compare: ctx.request.body.password },
-      };
+      // const createRule = {
+      //   email: { type: 'email', require: true },
+      //   username: { type: 'string', require: true },
+      //   password: { type: 'string', require: true },
+      //   repassword: { type: 'string', require: true, compare: ctx.request.body.password },
+      // };
       const md5Obj = crypto.createHash('md5');
       const psw = md5Obj.update(ctx.request.body.password).digest('base64');
-      // if (ctx.request.body.password !== ctx.request.body.repassword) {
-      //   await ctx.render('/user/register.tpl', {
-      //     title: '用户注册',
-      //     error: true,
-      //     message: '两次密码输入不一致',
-      //   });
-      //   return;
-      // }
-      ctx.validateError(createRule, ctx.request.body);
-      console.log(ctx.errors, 'mmmm');
-      const user = await ctx.model.User.findOne({
-        email: ctx.request.body.email,
-      });
+      if (ctx.request.body.password !== ctx.request.body.repassword) {
+        await ctx.render('/user/register.tpl', {
+          title: '用户注册',
+          error: true,
+          message: '两次密码输入不一致',
+        });
+        return;
+      }
+      // ctx.validateError(createRule, ctx.request.body);
+      const user = ctx.service.user.find(ctx.request.body.email);
       if (user) {
         await ctx.render('/user/register.tpl', {
           title: '用户注册',
@@ -53,7 +60,7 @@ module.exports = app => {
         password: psw,
         email: ctx.request.body.email,
       });
-      const result = await newUser.save();
+      const result = ctx.service.user.save(newUser);
       if (result) {
         await ctx.render('/user/login.tpl', {
           title: '用户登录',
@@ -68,14 +75,24 @@ module.exports = app => {
         });
       }
     }
-    // 登录模块
-    * login() {
-      yield this.ctx.render('user/login.tpl');
-    }
 
-    // 个人设置
-    * setting() {
-      yield this.ctx.render('user/setting.tpl');
+    // 登录表单的提交
+    async loginPost() {
+      const ctx = this.ctx;
+      const user = ctx.service.user.find(ctx.request.body.email);
+      if (!user) {
+        await ctx.render('/user/login.tpl', {
+          title: '用户登录',
+          error: true,
+          message: '用户不存在,请先注册~',
+        });
+      } else {
+        await ctx.render('/index/index.tpl', {
+          title: '用户登录',
+          success: true,
+          message: '登录成功~',
+        });
+      }
     }
   }
   return UserController;

@@ -11,14 +11,14 @@
     {% if error %}
     <p class="error-tips">{{ message }}</p>
     {% endif %}
-        <form method="post" action="">
+        <form method="post" action="/user/loginPost">
         <div class="control-group">
             <label class="label" for="email">邮箱：</label>
-            <input class="name input" name="email" type="text" placeholder="请填写登录邮箱"/>
+            <input class="name input" name="email" type="email" placeholder="请填写登录邮箱" required/>
         </div>
         <div class="control-group">
             <label class="label" for="password">密码</label>
-            <input class="password input" name="psw" type="password" placeholder="请填写密码"/>
+            <input class="password input" name="psw" type="password" placeholder="请填写密码" required/>
         </div>
         <input type="submit" value="登录" class="submit-btn"/>
         </form>

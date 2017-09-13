@@ -8,4 +8,5 @@ module.exports = app => {
   app.get('/user/login', app.controller.user.login);
   app.get('/user/setting', app.controller.user.setting);
   app.post('/user/registerPost', app.controller.user.registerPost);
+  app.post('/user/loginPost', app.controller.user.loginPost);
 };
