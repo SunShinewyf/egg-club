@@ -15,16 +15,13 @@ module.exports = app => {
 
     // 更新用户信息
     async update(emailId, userObj) {
-      const user = await this.ctx.service.user.find(emailId);
-      console.log(user, '8888');
-      user.update({ email: emailId }, {
-        github: userObj.github,
-        signature: userObj.signature,
+      const user = await this.ctx.model.User.update({ email: emailId }, {
+        $set: {
+          username: userObj.username,
+          github: userObj.github,
+          signature: userObj.signature,
+        },
       });
-      // user.github = userObj.github;
-      // user.signature = userObj.signature;
-      // this.ctx.service.user.save(user);
-      // console.log(user);
       return user;
     }
 

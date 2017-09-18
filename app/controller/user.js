@@ -36,7 +36,6 @@ module.exports = app => {
     // 个人设置
     async setting() {
       const ctx = this.ctx;
-      console.log(ctx.session.user[0], 'ooooo');
       if (!ctx.session.user[0]) {
         await ctx.render('user/login.tpl', {
           title: '用户登录',
@@ -47,11 +46,11 @@ module.exports = app => {
       }
       const email = ctx.session.user[0].email;
       const userObj = await ctx.service.user.find(email);
-      console.log(userObj, 'kkk');
+      console.log(userObj, '111');
 
       await ctx.render('user/setting.tpl', {
         title: '用户设置',
-        user: userObj,
+        user: userObj[0],
       });
     }
 
@@ -148,7 +147,6 @@ module.exports = app => {
         signature: ctx.request.body.signature,
       });
       const result = await ctx.service.user.update(ctx.session.user[0].email, newUser);
-      console.log(result, '9999');
       if (result) {
         await this.ctx.render('user/index.tpl', {
           title: '用户中心',
