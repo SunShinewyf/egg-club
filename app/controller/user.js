@@ -24,7 +24,7 @@ module.exports = app => {
 
     // 登录模块
     async login() {
-      if (this.ctx.session.user[0]) {
+      if (this.ctx.session.user) {
         await this.ctx.render('index/index.tpl', {
           title: 'egg社区',
         });
@@ -35,20 +35,23 @@ module.exports = app => {
 
     // 个人设置
     async setting() {
-      if (!this.ctx.session.user[0]) {
-        await this.ctx.render('user/login.tpl', {
+      const ctx = this.ctx;
+      console.log(ctx.session.user[0], 'ooooo');
+      if (!ctx.session.user[0]) {
+        await ctx.render('user/login.tpl', {
           title: '用户登录',
           error: true,
           message: '还未登录，先登录再设置吧~',
         });
         return;
       }
-      const email = this.ctx.session.user[0].email;
-      const userObj = await this.ctx.service.user.find(email);
+      const email = ctx.session.user[0].email;
+      const userObj = await ctx.service.user.find(email);
+      console.log(userObj, 'kkk');
 
-      await this.ctx.render('user/setting.tpl', {
+      await ctx.render('user/setting.tpl', {
         title: '用户设置',
-        user: userObj[0],
+        user: userObj,
       });
     }
 
@@ -136,8 +139,7 @@ module.exports = app => {
     // 设置表单的提交
     async settingPost() {
       const ctx = this.ctx;
-      const userObj = await ctx.service.user.find(ctx.session.user.email);
-      console.log(userObj[0], 'ooo');
+      const userObj = await ctx.service.user.find(ctx.session.user[0].email);
       const newUser = new ctx.model.User({
         username: ctx.request.body.username,
         password: userObj[0].password,
@@ -145,8 +147,8 @@ module.exports = app => {
         github: ctx.request.body.github,
         signature: ctx.request.body.signature,
       });
-      const result = ctx.service.user.save(newUser);
-      console.log(result, 'iiii');
+      const result = await ctx.service.user.update(ctx.session.user[0].email, newUser);
+      console.log(result, '9999');
       if (result) {
         await this.ctx.render('user/index.tpl', {
           title: '用户中心',

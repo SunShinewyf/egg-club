@@ -19,7 +19,9 @@ module.exports = appInfo => {
     url: 'mongodb://127.0.0.1/egg-club',
     options: {},
   };
-
+  config.proxyworker = {
+    port: 10086,
+  };
 
   return config;
 };
