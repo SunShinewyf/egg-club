@@ -108,4 +108,24 @@ footer p{
   line-height: 30px;
   margin-bottom: 20px;
 }
-
+.list-panel{
+   padding: 10px 10px 50px;
+   border-radius: 0 0 3px 3px;
+   background:#fff;
+}
+.list-panel .current{
+    background-color: #80bd01;
+    color: #fff;
+    padding: 3px 4px;
+    border-radius: 3px
+}
+.list-panel .cell{
+    padding-right: 10px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    height: 40px;
+    line-height: 40px;
+}
+.cell .date{
+  float:right;
+}

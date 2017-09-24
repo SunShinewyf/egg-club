@@ -25,12 +25,15 @@ module.exports = app => {
         content: ctx.request.body.content,
         tag: ctx.request.body.tag,
         author_email: ctx.session.user[0].email,
+        create_time: ctx.getCurrentTime(),
+        update_time: ctx.getCurrentTime(),
       });
       const result = await ctx.service.post.save(post);
-      console.log(result, '9999');
+      const lists = await ctx.service.post.find(ctx.session.user[0].email);
       if (result) {
         await ctx.render('index/index.tpl', {
           title: 'egg社区',
+          posts: lists,
           success: true,
           message: '发表成功',
         });
