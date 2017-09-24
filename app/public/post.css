@@ -1,0 +1,8 @@
+.write-panel{
+    padding: 50px 10px;
+    border-radius: 0 0 3px 3px;
+    background:#fff;
+}
+.write-panel .textarea{
+    height: 350px;
+}

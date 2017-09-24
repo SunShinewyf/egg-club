@@ -36,9 +36,14 @@ describe('test/app/controller/home.test.js', () => {
     // yield ctx.service.xx();
   });
   // const arr = [ 1, 2, 3 ];
-  it('power-assert', async function() {
+  // it('power-assert', async function() {
+  //   const ctx = app.mockContext({});
+  //   const users = await ctx.service.user.find('2632807692@qq.com');
+  //   assert.equal(users.length, 2);
+  // });
+  it('power-assert', function* () {
     const ctx = app.mockContext({});
-    const users = await ctx.service.user.find('2632807692@qq.com');
-    assert.equal(users.length, 2);
+    const users = yield ctx.service.user.find('2632807692@qq.com');
+    assert.equal(users.length, 1);
   });
 });

@@ -13,6 +13,7 @@
   "devDependencies": {
     "autod": "^2.9.0",
     "autod-egg": "^1.0.0",
+    "co-mocha": "^1.2.0",
     "egg-bin": "^4.3.2",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.10.0",
@@ -31,8 +32,7 @@
     "stop": "egg-scripts stop",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
-    // "test": "npm run lint -- --fix && npm run test-local",
-    "test": "mocha -r intelli-espower-loader test/**/*.test.js",
+    "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint .",

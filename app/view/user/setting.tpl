@@ -20,9 +20,9 @@
         </div>
         <div class="control-group">
             <label class="label" for="signature">个性签名</label>
-            <textarea class="signature textarea" name="signature" type="text" value= {{user.signature}}></textarea>
+            <textarea class="signature textarea" name="signature" type="text">{{user.signature}}</textarea>
         </div>
-        <input type="submit" value="保存设置" class="submit-btn"/>
+        <input type="submit" value="发表" class="submit-btn"/>
         </form>
    </div>
 </div>

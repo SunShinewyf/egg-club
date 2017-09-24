@@ -10,4 +10,8 @@ module.exports = app => {
   app.post('/user/registerPost', app.controller.user.registerPost);
   app.post('/user/loginPost', app.controller.user.loginPost);
   app.post('/user/settingPost', app.controller.user.settingPost);
+
+  // 文章路由
+  app.get('/post/write', app.controller.post.write);
+  app.get('/post/writePost', app.controller.post.writePost);
 };
