@@ -11,7 +11,7 @@
     {% if error %}
     <p class="error-tips">{{ message }}</p>
     {% endif %}
-        <form method="post" action="/user/loginPost">
+        <form method="post" action="/post/writePost">
         <div class="control-group">
             <label class="label" for="tag">请选择板块：</label>
             <select class="input" name="tag" id="tag-select">

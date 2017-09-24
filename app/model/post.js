@@ -5,7 +5,7 @@ module.exports = app => {
   const PostSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
-    author_id: { type: Number, required: true },
+    author_email: { type: String, required: true },
     reply_count: { type: Number, default: 0 },
     tag: { type: String, required: true },
     create_time: { type: Date, default: Date.now() },

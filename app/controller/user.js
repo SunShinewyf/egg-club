@@ -127,6 +127,7 @@ module.exports = app => {
         });
       } else {
         ctx.session.user = user;
+        console.log(ctx.session.user);
         await ctx.render('/index/index.tpl', {
           title: '用户登录',
           success: true,
