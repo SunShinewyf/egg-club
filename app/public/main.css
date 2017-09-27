@@ -84,7 +84,7 @@ header{
 }
 footer{
   clear:both;
-  position: absolute;
+  position: relative;
   bottom: 0px;
   background-color:#fff;
   width:100%;
@@ -94,6 +94,7 @@ footer p{
   font-size:14px;
   color:#ababab;
   margin-left:20px;
+  line-height: 40px;
 }
  
 .success-tips{

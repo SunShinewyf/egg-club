@@ -20,6 +20,7 @@ module.exports = app => {
     // 帖子提交逻辑
     async writePost() {
       const ctx = this.ctx;
+      console.log(ctx.getCurrentTime(), 'kkk');
       const post = new ctx.model.Post({
         title: ctx.request.body.title,
         content: ctx.request.body.content,
@@ -28,8 +29,11 @@ module.exports = app => {
         create_time: ctx.getCurrentTime(),
         update_time: ctx.getCurrentTime(),
       });
+      console.log(post, 'hhkkkl');
       const result = await ctx.service.post.save(post);
+      console.log(ctx.session.user[0], 'hhhh');
       const lists = await ctx.service.post.find(ctx.session.user[0].email);
+      console.log(lists, 'jkkjhh');
       if (result) {
         await ctx.render('index/index.tpl', {
           title: 'egg社区',

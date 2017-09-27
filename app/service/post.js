@@ -11,7 +11,7 @@ module.exports = app => {
     // 查找所有post
     async find(emailId) {
       const result = await this.ctx.model.Post.find({
-        email: emailId,
+        author_email: emailId,
       });
       return result;
     }

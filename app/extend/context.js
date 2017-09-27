@@ -19,6 +19,7 @@ module.exports = {
     const m = date.getMinutes() + ':';
     const s = date.getSeconds();
     const str = Y + M + D + h + m + s;
+    console.log(str, 'oooo');
     return str;
   },
 };

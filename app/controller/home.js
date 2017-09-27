@@ -4,7 +4,13 @@ module.exports = app => {
   class HomeController extends app.Controller {
     async index() {
       const ctx = this.ctx;
-      if (!ctx.session.user.length) {
+      if (ctx.session.user && ctx.session.user.length) {
+        const result = await ctx.service.post.find(ctx.session.user.email);
+        await ctx.render('index/index.tpl', {
+          title: 'egg社区',
+          posts: result,
+        });
+      } else {
         await ctx.render('user/login.tpl', {
           title: '用户登录',
           error: true,
@@ -12,11 +18,6 @@ module.exports = app => {
         });
         return;
       }
-      const result = await ctx.service.post.find(ctx.session.user.email);
-      await ctx.render('index/index.tpl', {
-        title: 'egg社区',
-        posts: result,
-      });
     }
   }
   return HomeController;
