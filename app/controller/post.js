@@ -48,12 +48,18 @@ module.exports = app => {
 
     // 帖子详情页
     async detail() {
+      const tags = [ '分享', '问答', '原创' ];
       const ctx = this.ctx;
       const id = ctx.params.id;
       const post = await ctx.service.post.findOne(id);
+      const email = post[0].author_email;
+      const userObj = await ctx.service.user.find(email);
+      const tagVal = tags[post[0].tag];
       await ctx.render('post/detail.tpl', {
         title: '帖子详情',
         result: post[0],
+        user: userObj[0],
+        tag: tagVal,
       });
     }
   }

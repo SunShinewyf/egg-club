@@ -5,8 +5,9 @@
        <div class="header">
           <div class="title">{{result.title}}</div>
           <div class="detail">
-            <span class="name">作者：</span>
+            <span class="name">作者：{{user.username}}</span>
             <span class="time">时间：{{result.update_time}}</span>
+            <span class="tag">来自：{{tag}}</span>
           </div>
        </div>
        <div class="content">{{result.content}}</div>
