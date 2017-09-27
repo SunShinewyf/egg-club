@@ -13,5 +13,7 @@ module.exports = app => {
 
   // 文章路由
   app.get('/post/write', app.controller.post.write);
+  app.get('/post/detail/:id', app.controller.post.detail);
   app.post('/post/writePost', app.controller.post.writePost);
+
 };

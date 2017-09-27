@@ -1,8 +1,27 @@
-.write-panel{
+.write-panel,.detail-panel{
     padding: 50px 10px;
     border-radius: 0 0 3px 3px;
     background:#fff;
 }
 .write-panel .textarea{
     height: 350px;
+}
+.header{
+    margin:0 20px;
+    background-color: #fff;
+    padding:10px;
+    border-radius: 3px 3px 0 0;
+    border-bottom: 1px solid #e1e1e1;
+}
+.header span{
+    color:#838383;
+    font-size:12px;
+}
+.header .title{
+    color:#333;
+    font-weight: 700;
+    font-size:22px;
+}
+.detail-panel .content{
+    padding:20px;
 }

@@ -15,6 +15,14 @@ module.exports = app => {
       });
       return result;
     }
+
+    // 查找某条post
+    async findOne(id) {
+      const result = await this.ctx.model.Post.find({
+        _id: id,
+      });
+      return result;
+    }
   }
   return PostService;
 };

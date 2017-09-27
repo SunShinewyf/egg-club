@@ -11,7 +11,7 @@
      <div class="topic_list">
         {% for item in posts %}
         <div class="cell">
-           <a class="title">{{item.title}}</a>
+           <a class="title" href="/post/detail/{{item._id}}">{{item.title}}</a>
            <span class="date">{{item.update_time}}</span>
         </div>
 

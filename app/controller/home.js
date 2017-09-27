@@ -5,7 +5,7 @@ module.exports = app => {
     async index() {
       const ctx = this.ctx;
       if (ctx.session.user && ctx.session.user.length) {
-        const result = await ctx.service.post.find(ctx.session.user.email);
+        const result = await ctx.service.post.find(ctx.session.user[0].email);
         await ctx.render('index/index.tpl', {
           title: 'egg社区',
           posts: result,
