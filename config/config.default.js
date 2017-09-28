@@ -22,7 +22,8 @@ module.exports = appInfo => {
 
   // 文件上传插件
   config.multipart = {
-    fileSize: '1M',
+    defaultCharset: 'utf8',
+    fileSize: '100kb',
   };
 
   config.proxyworker = {
