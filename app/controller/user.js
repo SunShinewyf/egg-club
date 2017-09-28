@@ -1,5 +1,7 @@
 'use strict';
 const crypto = require('crypto');
+const sendToWormhole = require('stream-wormhole');
+const path = require('path');
 
 module.exports = app => {
   class UserController extends app.Controller {
@@ -140,12 +142,25 @@ module.exports = app => {
     async settingPost() {
       const ctx = this.ctx;
       const userObj = await ctx.service.user.find(ctx.session.user[0].email);
+      const stream = await ctx.getFileStream();
+      const name = path.basename(stream.filename);
+      let imageObj;
+
+      try {
+        imageObj = await ctx.oss.put(name, stream);
+      } catch (err) {
+        await sendToWormhole(stream);
+        throw err;
+      }
+
+      console.log(imageObj, 'oohhhhh');
       const newUser = new ctx.model.User({
-        username: ctx.request.body.username,
+        username: stream.fields.username,
+        avatar: stream.filename,
         password: userObj[0].password,
         email: userObj[0].email,
-        github: ctx.request.body.github,
-        signature: ctx.request.body.signature,
+        github: stream.fields.github,
+        signature: stream.fields.signature,
       });
       const result = await ctx.service.user.update(ctx.session.user[0].email, newUser);
       if (result) {

@@ -17,11 +17,14 @@
     "egg-bin": "^4.3.2",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.10.0",
+    "egg-multipart": "^1.5.0",
+    "egg-oss": "^1.0.2",
     "eslint": "^4.5.0",
     "eslint-config-egg": "^5.1.0",
     "intelli-espower-loader": "^1.0.1",
     "mocha": "^3.5.3",
     "power-assert": "^1.4.4",
+    "stream-wormhole": "^1.0.3",
     "webstorm-disable-index": "^1.2.0"
   },
   "engines": {

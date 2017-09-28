@@ -19,6 +19,12 @@ module.exports = appInfo => {
     url: 'mongodb://127.0.0.1/egg-club',
     options: {},
   };
+
+  // 文件上传插件
+  config.multipart = {
+    fileSize: '1M',
+  };
+
   config.proxyworker = {
     port: 10086,
   };

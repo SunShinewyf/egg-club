@@ -5,7 +5,7 @@
       <span><a href="/" class="index">首页</a>/ 个人设置</span>
    </div>
    <div class="info-panel">
-        <form method="post" action="/user/settingPost">
+        <form method="post" action="/user/settingPost?_csrf={{ctx.csrf | safe}}" enctype="multipart/form-data">
         <div class="control-group">
             <label class="label" for="name">用户名</label>
             <input class="name input" name="username" type="text" value={{user.username}}>
@@ -15,8 +15,8 @@
             <input class="github input" name="github" type="text" value ={{user.github}}>
         </div>
         <div class="control-group">
-            <label class="label" for="github">头像上传</label>
-            <input class="github" name="github" type="file">
+            <label class="label" for="avatar">头像上传</label>
+            <input class="avatar input" name="avatar" type="file">
         </div>
         <div class="control-group">
             <label class="label" for="signature">个性签名</label>
