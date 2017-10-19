@@ -11,7 +11,7 @@
     {% if error %}
     <p class="error-tips">{{ message }}</p>
     {% endif %}
-        <form method="post"  action="/user/registerPost">
+        <form class="register-form" method="post"  action="/user/registerPost">
         <div class="control-group">
             <label class="label" for="email">邮箱</label>
             <input  class="email input" name="email" placeholder="请填写邮箱" type="email" required/>

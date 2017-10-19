@@ -5,7 +5,7 @@
       <span><a href="/" class="index">首页</a>/ 个人设置</span>
    </div>
    <div class="info-panel">
-        <form method="post" action="/user/settingPost?_csrf={{ctx.csrf | safe}}" enctype="multipart/form-data">
+        <form class="setting-form" method="post" action="/user/settingPost?_csrf={{ctx.csrf | safe}}" enctype="multipart/form-data">
         <div class="control-group">
             <label class="label" for="name">用户名</label>
             <input class="name input" name="username" type="text" value={{user.username}}>
