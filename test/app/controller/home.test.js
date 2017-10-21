@@ -1,22 +1,24 @@
 'use strict';
 
-const { app, assert } = require('egg-mock/bootstrap');
+const request = require('supertest');
+const mm = require('egg-mock');
+const assert = require('assert');
+const cheerio = require('cheerio');
 
 describe('test/app/controller/home.test.js', () => {
-
-  it('should assert', function* () {
-    const pkg = require('../../../package.json');
-    assert(app.config.keys.startsWith(pkg.name));
-
-    // const ctx = app.mockContext({});
-    // yield ctx.service.xx();
+  let app;
+  before(async () => {
+    app = mm.app();
+    await app.ready();
   });
 
-  it('should GET /', () => {
-    return app.httpRequest()
-      .get('/')
-      .expect('hi, egg')
-      .expect(200);
+  after(() => app.close());
+  // afterEach(mm.restore());
+  it('should GET /', async () => {
+    const result = await request(app.callback()).get('/').expect(200);
+    const $ = cheerio.load(result.text);
+    const routeList = $('.routes li');
+    assert(routeList.length === 5);
   });
 });
 
