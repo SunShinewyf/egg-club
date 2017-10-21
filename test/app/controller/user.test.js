@@ -35,4 +35,8 @@ describe('test/app/controller/user.test.js', () => {
     const form = $('.setting-form');
     assert(form.attr('action') === '/user/indexPost');
   });
+
+  it('should POST /register', async () => {
+
+  });
 });
